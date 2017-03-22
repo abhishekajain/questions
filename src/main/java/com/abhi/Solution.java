@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Solution
 { 
-
+	//return 0 if error otherwise return 1
 	public static int hasBalancedBrackets(String str)
 	{
 	    if(str == null || str.length() <= 1){
@@ -37,13 +37,12 @@ public class Solution
 	            char[] newCharArr = newStr.toCharArray();
 	            for(int j=0; j<newCharArr.length; j++){
 	                char nextC = newCharArr[j];
-	                if(nextC == bracket.close){
-	                    return 1;
-	                }else if(nextC == bracket.open){
-	                    return findBalanced(newStr, bracket);
+	                if(nextC == bracket.close || nextC == bracket.open){
+	                    findBalanced(newStr.substring(j+1), bracket);
 	                }
 	            }
-	            return 0;
+	        }else if(c == bracket.close){
+	        	return 0;
 	        }
 	    }
 	    return 1;
@@ -61,5 +60,7 @@ public class Solution
 	
 	public static void main(String[] args){
 		System.out.println(hasBalancedBrackets("(h[e{1o}!]~)()()()("));
+		System.out.println(hasBalancedBrackets("(h[e{1o}!]~)()()()()"));
+
 	}
 }
