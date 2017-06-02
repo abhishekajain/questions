@@ -32,8 +32,8 @@ public class BinarySearchTree {
 		tree1.root.left.right = new BinaryTreeNode(60);
 		tree1.root.right.left = new BinaryTreeNode(70);
 		tree1.root.right.right = new BinaryTreeNode(90);
-        
-        System.out.println("tree.isBinarySearchTree>>>"+tree.isBinarySearchTree(tree1.root));
+		tree1.display(tree1.root, "ROOT");
+        System.out.println("tree.isBinarySearchTree>>>"+tree1.isBinarySearchTree(tree1.root));
 	}
 	
 	
@@ -50,6 +50,14 @@ public class BinarySearchTree {
 				return true;
 			}
 			return false;
+		}
+		
+		public void display(BinaryTreeNode root, String dirction){
+			if(root!=null){
+				display(root.left, "LEFT<<<");
+				System.out.print(" "+dirction+" " + root.value);
+				display(root.right, ">>>RIGHT");
+			}
 		}
 
 	}
