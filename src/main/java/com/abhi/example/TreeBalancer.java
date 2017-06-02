@@ -83,6 +83,7 @@ public class TreeBalancer {
 
 		public BinaryTreeNode(int value) {
 			this.value = value;
+			left = right = null;
 		}
 
 		public BinaryTreeNode insertLeft(int leftValue) {
