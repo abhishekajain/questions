@@ -1,0 +1,140 @@
+-----------------------------------------------------------------------------------------------------------------------
+Install Mint Debian Cinnamon Linux VM 
+-----------------------------------------------------------------------------------------------------------------------
+0.0 Setup working area for VMs.
+  1. > save ISOs at: C:\Software\vm\iso
+  2. > save individual VMs at: C:\Software\vm\<vm-hostname>
+
+0.1 Networking for Mint Debian Cinnamon Linux VMs:
+  > Hostname: cinnamon (choose your own)
+  > IP Address: (your ip address here)
+
+1. Install VMware Workstation Pro
+  > run Software Center on laptop
+  > search for VMware Workstation Pro
+  > install, then run and install Mint Debian Cinnamon Linux
+
+2. Mint Debian Cinnamon Linux
+  > download LDME 64 bit ISO: lmde-2-201503-cinnamon-64bit.iso
+  > run VMware Workstation Pro
+  > install LDME 64 bit
+	 > choose 32 GB storage, 8 GM memory
+	 > Installer screen is too small to show the installer's panel buttons at the bottom.
+					The fix is to go to administration/display and set the display to 1280x1024, then
+					proceed.
+  > Problem, once installed the network does not work.  Fix - according to Collin
+	 > remove the VM network adaptor - it cannot work in either Bridged or NAT mode
+	 > plug-in a USB network dongle into the laptop Docking Station and plug-in the
+					red network.  The red network now functions in place of the blue network.
+					Actually the red network turns out to be lots faster than the blue network
+	 > On VMware Workstation Pro menu select:
+					> VM/Removeable Devices/Realtek USB 10/100/1000 LAN/Connect to host
+	 > restart the VM, and wait for the network to connect
+	 > Network to VM is up - working, but the network to Windows is disconnected
+  > It turns out that plugging the blue network back in and disconnecting the OpenVPN
+				 GUI allows Windows to connect to the blue network (wired and wireless) while
+				 the Mint Linux VM connects to the red network.  It also turns out that I can
+				 connect to Proxmox VMs without the OpenVPN GUI, putty connects to my Debian
+				 VMs just fine.  The Debian VMs are in this building not in the remote building
+				 where the AFM VM serves and switches were.
+  > *** before starting install, go VMware Workstation Menu: VM/Removable Devices
+				 and remove the Network Device, then reset the USB to USB 3.0 and add the USB
+				 Realtek 10/100/1000 USB Network Device
+  > Sometimes the USB 3.0 Network Driver will not start.  Uplugging the Red Network
+				 cable will sometimes fix it.  The overall solution is to disable this network
+				 interface on Windows - this should fix the problem for all time.
+  > Problem with Cinnamon.  Will fail to load if the VMware display 3D option is not
+				 selected.  When the Cinnamon VM is powered off, select the 3D option in the
+				 VMware display settings for the VM.  Restart, should work fine.
+
+3. Install VMware Tools:
+  > eject the Mint Linux installation disk
+  > VMware Workstation Menu: VM/Install VMware Tools - will load the VMware Tools ISO in CD Drive
+  > follow instructions in C:\Software\vm\vmware-tools-installation-configuration.pdf
+  > mount  ==> shows where the VMware Tools ISO is mounted
+  > note ISO contents are at: ll /media/????/VMware Tools
+  > cd /tmp
+  > tar zxpf /media/????/VMware Tools/VMwareTools-x.x.x-yyyy.tar.gz
+  > cd vmware-tools-distrib
+  > ./vmware-install.pl
+
+4. Mint Debian Linux Updates and installs:
+  all installs must be as root
+  > su - root
+sudo apt-get -y -q update
+does not run sudo apt-get -y -q upgrade 
+ > apt-get update                                                                           ==> done
+  > apt-get upgrade                                                                        ==> done
+  > lsb_release -a
+				 No LSB modules are available.
+				 Distributor ID: LinuxMint
+				 Description: LMDE 2 Betsy
+				 Release: 2
+				 Codename: betsy
+  > which wget                                                                                 ==> /usr/bin/wget; v1.16
+  > which curl                                                                                   ==> /usr/bin/curl; v7.38.0
+  > which sudo                                                                                 ==> /usr/bin/sudo; v1.8.10p3
+				 > visudo => add bruce ALL=(ALL:ALL) ALL
+  > apt-get install tree                                                     ==> /usr/bin/tree; v1.7.0
+  > apt-get install git-core                               ==> /usr/bin/git; 2.1.4
+  > git config --global user.name "Bruce Amberden"                                                           ==> set git user name
+  > git config --global user.email "bruce_amberden@dell.com"                        ==> set git user email
+  > which python                                                                             ==> /usr/bin/python; v2.7.9
+  > which perl                                                                                   ==> /usr/bin/perl; v5.20.2
+
+5. Install OpenSSH:
+  > apt-get install openssh-server openssh-client
+  > nc -v -z 127.0.0.1 22                                                  ==> test: connection to 127.0.0.1 22 port [tcp/ssh] succeeded!
+  > /etc/init.d/ssh [ start | stop | restart ]
+
+6. Install & Setup for Node dev on Mint Debian Linux:
+  > su - root
+  > curl -sL https://deb.nodesource.com/setup_6.x | bash -
+  > apt-get install -y nodejs
+  > apt-get install -y build-essential
+  > node -v                                                                                        ==> /usr/bin/node; v6.2.1
+  > npm -v                                                                                         ==> /usr/bin/npm; v3.9.3
+  > npm install npm@latest -g                                       ==> v3.9.5
+  > npm install n@latest -g                                             ==> /usr/bin/n; v2.1.0
+  > n latest
+  > node -v                                                                                                       ==> v6.2.1
+
+7. install Yeoman (yo), Yeoman Generators, Bower, Grunt:
+  > su - root                                                                                                                                                                 ==> yo CANNOT be run from root, except yo --version
+  > npm install yo@latest -g                                                                                                       ==> /usr/local/bin/yo; v1.8.4
+  > npm install generator-webapp -g                                                                        ==> done
+  > npm install generator-angular generator-karma -g           ==> done
+  > npm install bower -g                                                                                                              ==> /usr/local/bin/bower; v1.7.9
+  > npm install bower-update -g                                                                                ==> /usr/local/bin/bower-update; v0.2.0
+  > npm install grunt-cli -g                                                                                           ==> /usr/local/bin/grunt; v1.2.0
+
+8. Verify yo
+  > terminal, NOT on root
+  > yo doctor                                                                                                   ==> Everything looks all right!
+  > yo --generators                                                                         ==> angular, webapp, karma
+			  
+9. Setup SSH keys for access to git-stash to clone POE code:
+  > terminal, NOT on root
+  Create a ssh-key without a passcode.
+  > ssh-keygen -t rsa                                                                                                                                   ==> just enter CR for each question to take the defaults
+  > ssh-copy-id (your uname here)@stash.force10networks.com      ==> does not work this way
+
+10. Load key contents .ssh/id_rsa.pub into stash profile to enable access to git-stash
+  > terminal, NOT on root
+  > in VM browser: https://stash.force10networks.com
+				 username: bamberden
+				 password: (pass0) same as original laptop password
+  > Person Icon/View profile/Manage account/SSH keys/Add key
+  > terminal> cat .ssh/id_rsa.pub
+  > copy key text, paste into Add key form, save
+  Done.
+
+11. Install Google Chrome (for the dev tools):
+  As root:
+  > su - root
+  > cd work
+  > wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  > gdebi google-chrome-stable_current_amd64.deb
+  Done.
+			  
+
