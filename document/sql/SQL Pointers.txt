@@ -32,7 +32,9 @@ Different Types of SQL JOINs
 	The following SQL statement matches customers that are from the same city:
 	// not equal customer id // but equal name
 	SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City FROM Customers A, Customers B WHERE A.CustomerID <> B.CustomerID  AND A.City = B.City ORDER BY A.City;
-	
+-----------------------------------------------------------------------------------------------------------------------
+SQL GROUP BY and HAVING
+-----------------------------------------------------------------------------------------------------------------------	
 6 GROUP BY Statement The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
 
 	The following SQL statement lists the number of customers in each country:
@@ -43,10 +45,11 @@ Different Types of SQL JOINs
 	
 	The following SQL statement lists the number of orders sent by each shipper:
 	SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID GROUP BY ShipperName;
+	
 	The following SQL statement lists all shippers and the number of orders sent by each shipper: Here it will list the shipper with no order as zero orders from the shipper
 	SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Shippers LEFT JOIN Orders ON Orders.ShipperID = Shippers.ShipperID GROUP BY ShipperName;
 	
-6 SQL HAVING The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+7 SQL HAVING The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
 	
 	SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) HAVING condition ORDER BY column_name(s);
 	
