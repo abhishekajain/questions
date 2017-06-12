@@ -1,0 +1,3 @@
+git checkout –b feature/document origin master
+
+git push –u origin feature/document
