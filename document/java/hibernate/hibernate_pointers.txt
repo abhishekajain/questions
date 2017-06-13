@@ -1,0 +1,27 @@
+-----------------------------------------------------------------------------------------------------------------------
+Important Hibernate terms and use
+-----------------------------------------------------------------------------------------------------------------------
+1. Cache:
+	First-level:
+	First-level cache always Associates with the Session object. Hibernate uses this cache by default. Here, it processes one transaction after another one, means wont process one transaction many times. Mainly it reduces the number of SQL queries it needs to generate within a given transaction. That is instead of updating after every modification done in the transaction, it updates the transaction only at the end of the transaction.
+
+	Second-level:
+	Second-level cache always associates with the Session Factory object. While running the transactions, in between it loads the objects at the Session Factory level, so that those objects will be available to the entire application, not bound to single user. Since the objects are already loaded in the cache, whenever an object is returned by the query, at that time no need to go for a database transaction. In this way the second level cache works. Here we can use query level cache also.
+
+2. Sample Use low level
+	Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+	SessionFactory sf = cf.buildSessionFactory(sr);
+	Session session = sf.openSession();
+	Entity std = new Entity();	
+	Transaction tx = session.beginTransaction();	
+	session.save(std);
+	tx.commit();
+	session.close();
+	sf.close();
+	
+3. Different between session.get() and session.load()
+	session.load()
+	It will always return a “proxy” (Hibernate term) without hitting the database. In Hibernate, proxy is an object with the given identifier value, its properties are not initialized yet, it just look like a temporary fake object. If no row found , it will throws an ObjectNotFoundException.
+
+	session.get()
+	It always hit the database and return the real object, an object that represent the database row, not proxy. If no row found , it return null.
