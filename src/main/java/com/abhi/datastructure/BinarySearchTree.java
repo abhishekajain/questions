@@ -1,4 +1,4 @@
-package com.abhi;
+package com.abhi.datastructure;
 
 public class BinarySearchTree {
 	
