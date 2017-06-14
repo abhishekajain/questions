@@ -1,7 +1,5 @@
 package com.abhi.datastructure;
 
-import com.sun.org.apache.regexp.internal.REUtil;
-
 /**
  * A building has 100 floors. One of the floors is the highest floor an egg can
  * be dropped from without breaking. If an egg is dropped from above that floor,
@@ -25,12 +23,12 @@ public class TwoEgg {
 		for(int index=0; index<floors.length; index++){
 			floors[index] = index+1;
 		}
-		
-		System.out.println(findIndex(floors, 67));
+		int element = 201;
+		System.out.println("Found Element " +element+" at index:"+binarySearch(floors, element));
 		
 	}
 	
-	public static int findIndex(int[] floors, int element){
+	public static int binarySearch(int[] floors, int element){
 		int min = 0;
 		int max = floors.length-1;
 		int average = 0;
@@ -46,6 +44,11 @@ public class TwoEgg {
 				findIt = true;
 				break;
 			}
+		}
+		
+		if(!findIt){
+			System.out.println("Didnt find element in the array:"+element);
+			return -1;
 		}
 		
 		return average;
