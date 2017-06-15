@@ -1,3 +1,16 @@
+-----------------------------------------------------------------------------------------------------------------------
+Current project?
+-----------------------------------------------------------------------------------------------------------------------
+Debian 8
+packer
+REST backend
+Node proxy and https server serving static content
+open ssl certificate
+spring-boot project 
+
+overrode logback  LayoutBase<ILoggingEvent> 
+
+
 ant
 maven
 shell
@@ -21,3 +34,162 @@ open ssl
 d3
 git
 PasswordManager
+Packer
+
+-----------------------------------------------------------------------------------------------------------------------
+Current project?
+-----------------------------------------------------------------------------------------------------------------------
+wrote annotation to work with codemodel
+
+  <properties>
+        <!-- The main class to start by executing java -jar (needed for spring boot) -->
+        <start-class>org.jsonschema2pojo.cli.Jsonschema2PojoCLI</start-class>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.sun.codemodel</groupId>
+                        <artifactId>codemodel-custom</artifactId>
+                        <version>2.6</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}${file.separator}..${file.separator}lib${file.separator}codemodel-custom-2.6.jar</systemPath>
+                    </dependency>
+                </dependencies>
+
+
+-----------------------------------------------------------------------------------------------------------------------
+What did you like least about your last job?
+-----------------------------------------------------------------------------------------------------------------------
+I think overall I've been satisfied with my jobs. I am part of innvoation team of Dell Networking and that give me opportinutiy to explore and implement new ideas/technologies.
+I feel I am little behind in network engineering core .. e.g how overlay network works and what all different types of fabric deployment can happen.
+I applied to Apple as a referral and it is kind of mouth pulicity and I see this as carrer growth opportinutiy.
+
+-----------------------------------------------------------------------------------------------------------------------
+Can you tell me what you enjoy about your current job?
+-----------------------------------------------------------------------------------------------------------------------
+I want to move on because I'm looking for a new and greater challenge – not because I dislike my current job.  
+I enjoy getting myself expose to new technologies e.g. we are now planning to move away from java in middleware service towards Python and it gives me exposer.
+I like Director I am reporting, he listen to ideas and provide feedbacks and involve in the discussion.
+I like flexblity that Dell has in terms of work hours and remote working options.
+I liked the team, it is mix of different level and expertise of different technologies that gives me different prosecpective of problems and ideas.
+
+I enjoy the sincere appreciation I receive from not only my boss, but also the people I work with. A heartfelt "thanks" goes a long way to improving my attitude and productivity.
+
+Dell has good training program and if needed I can enrol for outside trainings too with approval of manager. So, I can enhance my skills as I see fit and have time. I guess they trust that employees generally want to succeed and if they feel they need some training, they probably do.
+
+Little things go a long way, e.g. app of smalli actual achievements.
+
+The physical environment is a little cramped, while at the same time open.
+
+Okay, ending on a positive note, I'm good at my job and feel positive about my contribution to the business at the highest level.
+
+-----------------------------------------------------------------------------------------------------------------------
+Describe experience ?
+-----------------------------------------------------------------------------------------------------------------------
+I am Abhishek Jain. I have 13 year of full stack software development experience and approx five years of application design experience.
+I have experience building and supporting software applications in variety of domains. I think having experience in different domains bring creative solutions to problems and bring best practices of applications of different domains.
+
+My technical expertise includes J2EE, SQL, Web Services and Java Script, with Agile/Waterfall development methodology.
+Also I have experience writing code using python and bash.
+
+I have experience developing multi-threaded concurrent applications and my full stack development experience enables me to contribute in both server side and client side of the project.
+-----------------------------------------------------------------------------------------------------------------------
+Interview
+-----------------------------------------------------------------------------------------------------------------------
+1. describe current project
+2. how you are ensureing memory foot print of appliance
+what is using in as json parser with spring fasterxml.jackson.databind
+3. why REST usage response as byte stream not object
+4. concurrent future-- callback method eq of javascript
+5. hashmap -- immutable, unmodifiable
+p{fname, lname}
+p1 a b
+p2 c d
+p3 a b
+map.put(p1,1);
+map.put(p2,2);
+map.put(p3,3);
+this will add three keys if equals and hashcode is not implemented
+if implemented then it will add two entried 2,3 
+after adding if changes p2 to a b
+and try accessing map it will be underminstic behavior
+how to control key should be immutable if key is collection use unmodifiable collection
+6. EhCache -- EhCache Implementation 
+7. Cache -- LRUMap this has method removeEldestEntry(Map.Entry)  to remove least used entry
+http://docs.oracle.com/javase/6/docs/api/index.html?java/util/LinkedHashMap.html
+using stack design stack 
+8. have you used distributed cache
+9. TDD how to write unit test cases (hyperdb, h2db, xmldb) I think he was trying me to answer @RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+public class AccountServiceTest {
+
+@Configuration
+static class AccountServiceTestContextConfiguration {
+@Bean
+public AccountService accountService() {
+return new AccountServiceImpl();
+}
+@Bean
+public AccountRepository accountRepository() {
+return Mockito.mock(AccountRepository.class);
+}
+}
+
+//We Autowired the AccountService bean so that it is injected from the configuration
+@Autowired
+private AccountService accountService;
+@Autowired
+private AccountRepository accountRepository);
+Before
+public void setup() {
+Account account = new AccountBuilder() {
+{
+address("Herve", "4650", "Rue de la gare", "1", null, "Belgium");
+credentials("john", "secret");
+name("John", "Doe");
+}
+}.build(true);
+Mockito.when(accountRepository.findByUsername("john")).thenReturn(account);
+}
+@Test(expected = AuthenticationException.class)
+public void testLoginFailure() throws AuthenticationException {
+accountService.login("john", "fail");
+}
+@Test()
+public void testLoginSuccess() throws AuthenticationException {
+Account account = accountService.login("john", "secret");
+assertEquals("John", account.getFirstName());
+assertEquals("Doe", account.getLastName());
+}
+}
+@After
+public void verify() {
+Mockito.verify(accountRepository, VerificationModeFactory.times(1)).findByUsername(Mockito.anyString());
+// This is allowed here: using container injected mocks
+Mockito.reset(accountRepository);
+}
+
+AccountService
+@Service
+@Transactional(readOnly = true)
+public class AccountServiceImpl implements AccountService {
+
+@Autowired
+private AccountRepository accountRepository;
+
+@Override
+public Account login(String username, String password) throws AuthenticationException {
+Account account = this.accountRepository.findByUsername(username, password);
+} else {
+throw new AuthenticationException("Wrong username/password", "invalid.username");
+}
+return account;
+}
+}
+
