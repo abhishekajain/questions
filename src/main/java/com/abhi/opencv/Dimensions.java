@@ -7,7 +7,9 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
@@ -51,7 +53,28 @@ public class Dimensions {
 			Mat orig = image.clone();
 			try{
 				Rect rect = Imgproc.boundingRect(contour);
+				Point[] box = contour.toArray();
 				System.out.println(rect.area());
+				Point tlPoint = rect.tl();
+				Point brPoint = rect.br();
+				
+				Point trPoint = Dimensions.tr(rect);
+				Point blPoint = Dimensions.bl(rect);
+				
+				Core.line(orig, tlPoint, blPoint, new Scalar(255), 3);
+				Core.putText(orig, ""+euclidean(tlPoint, blPoint), tlPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+				
+				Core.line(orig, blPoint, brPoint, new Scalar(255), 3);
+				Core.putText(orig, ""+euclidean(blPoint, brPoint), blPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+
+				Core.line(orig, brPoint, trPoint, new Scalar(255), 3);
+				Core.putText(orig, ""+euclidean(brPoint, trPoint), brPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+
+				Core.line(orig, trPoint, tlPoint, new Scalar(255), 3);
+				Core.putText(orig, ""+euclidean(trPoint, tlPoint), trPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+
+				
+				
 			}catch(Exception e){
 				System.err.println(e);
 				//continue;
@@ -63,5 +86,28 @@ public class Dimensions {
 		}
 	
 	}
+	
+	
 
+    private static Point tr(Rect rect) {
+        return new Point(rect.x + rect.width, rect.y);
+    }
+
+    private static Point bl(Rect rect) {
+        return new Point(rect.x , rect.y + rect.height);
+    }
+
+    private static double euclidean(Point p1, Point p2){
+
+    	double  xDiff = p1.x-p2.x;
+            double  xSqr  = Math.pow(xDiff, 2);
+
+    	double yDiff = p1.y-p2.y;
+    	double ySqr = Math.pow(yDiff, 2);
+
+    	double output   = Math.sqrt(xSqr + ySqr);
+    	
+    	System.out.println("Distance = " + output);  
+    	return output;
+    }
 }
