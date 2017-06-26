@@ -2,6 +2,7 @@ package com.abhi.opencv;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -16,6 +17,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class Dimensions {
 	
+	@SuppressWarnings("unused")
 	private static long[] midpoint(long[] pointA, long[] pointB){
 		long a = (pointA[0] + pointB[0]) /2;
 		long b = (pointA[1] + pointB[1]) /2;
@@ -45,45 +47,48 @@ public class Dimensions {
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		Imgproc.findContours(image.clone(), contours, new Mat(), Imgproc.RETR_EXTERNAL,
 				Imgproc.CHAIN_APPROX_SIMPLE);
-		int counter = 1;
+		List<Rect> list = new ArrayList<Rect>();
 		for(MatOfPoint contour: contours){
-			if(contour == null || Imgproc.contourArea(contour)< 100){
-				continue;
-			}
-			Mat orig = image.clone();
-			try{
-				Rect rect = Imgproc.boundingRect(contour);
-				Point[] box = contour.toArray();
-				System.out.println(rect.area());
-				Point tlPoint = rect.tl();
-				Point brPoint = rect.br();
-				
-				Point trPoint = Dimensions.tr(rect);
-				Point blPoint = Dimensions.bl(rect);
-				
-				Core.line(orig, tlPoint, blPoint, new Scalar(255), 3);
-				Core.putText(orig, ""+euclidean(tlPoint, blPoint), tlPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
-				
-				Core.line(orig, blPoint, brPoint, new Scalar(255), 3);
-				Core.putText(orig, ""+euclidean(blPoint, brPoint), blPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
-
-				Core.line(orig, brPoint, trPoint, new Scalar(255), 3);
-				Core.putText(orig, ""+euclidean(brPoint, trPoint), brPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
-
-				Core.line(orig, trPoint, tlPoint, new Scalar(255), 3);
-				Core.putText(orig, ""+euclidean(trPoint, tlPoint), trPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
-
-				
-				
-			}catch(Exception e){
-				System.err.println(e);
-				//continue;
-			}
-			
-			Highgui.imwrite(imageFile+counter+".jpg", orig);
-			counter++;
-			
+			list.add(Imgproc.boundingRect(contour));
 		}
+		
+		Stream<Rect>  stream = list.stream().sorted((e1, e2) -> Integer.compare(e1.x,e2.x));
+			
+		stream.forEach(rect -> {
+			System.out.println("X axis "+rect.x);
+			if(rect == null || rect.area()< 100){
+				System.out.println("small image");
+			}else{
+				
+				try{
+					Mat orig = image.clone();
+					System.out.println(rect.area());
+					Point tlPoint = rect.tl();
+					Point brPoint = rect.br();
+					
+					Point trPoint = Dimensions.tr(rect);
+					Point blPoint = Dimensions.bl(rect);
+					
+					Core.line(orig, tlPoint, blPoint, new Scalar(255), 2);
+					Core.putText(orig, ""+euclidean(tlPoint, blPoint), tlPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+					
+					Core.line(orig, blPoint, brPoint, new Scalar(255), 2);
+					Core.putText(orig, ""+euclidean(blPoint, brPoint), blPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+	
+					Core.line(orig, brPoint, trPoint, new Scalar(255), 2);
+					//Core.putText(orig, ""+euclidean(brPoint, trPoint), brPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+	
+					Core.line(orig, trPoint, tlPoint, new Scalar(255), 2);
+					//Core.putText(orig, ""+euclidean(trPoint, tlPoint), trPoint, Core.FONT_ITALIC, 2, new Scalar(255, 255, 255));
+	
+					Highgui.imwrite(imageFile+rect.x+".jpg", orig);
+					
+				}catch(Exception e){
+					System.err.println(e);
+				}				
+				
+			}
+		});
 	
 	}
 	
