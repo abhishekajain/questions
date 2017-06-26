@@ -15,6 +15,12 @@ import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
+/**
+ * Add opencv native lib path (path of libopencv_java2413.so)before running this main
+ * vm args e.g. -Djava.library.path=$OPENCV_HOME/lib
+ * @author abhishekajain
+ *
+ */
 public class Dimensions {
 	
 	@SuppressWarnings("unused")
