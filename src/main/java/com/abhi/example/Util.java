@@ -1,4 +1,4 @@
-package com.abhi;
+package com.abhi.example;
 
 public class Util {
 	
