@@ -1,11 +1,10 @@
 package com.abhi.datastructure;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,6 +56,7 @@ public class GraphNode {
 		c.addNeighbor(b);
 		
 		List<GraphNode> graph = Arrays.asList(a, b, c);
+		//get the graph dimension based on how many neighbors maximum it can have
 		int dimension = 0;
 		for(GraphNode node: graph){
 			int newDimension = node.getNeighbors().size();
@@ -64,11 +64,43 @@ public class GraphNode {
 				dimension = newDimension;
 			}			
 		}
-		
-		Map<Integer, String> colors = new HashMap<Integer, String>();
+		//create list of legal colors 
+		List<String> legalColors = new ArrayList<String>();
 		for(int i=0; i<=dimension; i++){
-			colors.put(i+1, "color"+1);
+			legalColors.add("color"+i);
 		}
+		
+		colorGraph(graph, legalColors);
+    }
+    
+    
+    public static void colorGraph(List<GraphNode> graph, List<String> colors) {
+
+        for (GraphNode node : graph) {
+        	if(!node.hasColor()){
+	            Set<GraphNode> neighbors = node.getNeighbors();
+	
+	            if (neighbors.contains(node)) {
+	                throw new RuntimeException("Node with loop :" + node.getLabel());
+	            }
+	            
+	            // get the node's neighbors' colors, and create a set, later will remove these colors from coloring.
+	            Set<String> illegalColors = new HashSet<>();
+	            for (GraphNode neighbor : neighbors) {
+	                if (neighbor.hasColor()) {
+	                    illegalColors.add(neighbor.getColor());
+	                }
+	            }
+	
+	            // assign color
+	            for (String color : colors) {
+	                if (!illegalColors.contains(color)) {
+	                    node.setColor(color);
+	                    break;
+	                }
+	            }
+        	}
+        }
     }
 
 }
