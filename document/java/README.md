@@ -3,5 +3,5 @@
 	$ sudo apt-get remove openjdk-7*
 	$ echo "deb [trusted=yes] http://ftp.us.debian.org/debian jessie-backports main" | sudo tee -a /etc/apt/sources.list.d/jessie-backports.list
 	$ sudo apt-get update
-	$ sudo apt install -t jessie-backports  openjdk-8-jdk ca-certificates-java
+	$ sudo apt-get install -t jessie-backports  openjdk-8-jdk ca-certificates-java
 

@@ -1,7 +1,6 @@
 package com.abhi.example;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Stack;
 
 /**
  * 
@@ -14,7 +13,7 @@ import java.util.Set;
 public class PalindromePermutation {
 
 	public static void main(String[] args) {
-		String[] strArr = { "civic", "ivicc", "civil", "livci", "a", "aa", "aabb", "zszsxdxdcf" };
+		String[] strArr = {"aa", "civic", "ivicc", "civil", "livci", "a", "aa", "aabb", "zszsxdxdcf", "abba" };
 		for(String str:strArr){
 			System.out.println(str+":"+findPalindrome(str));
 		}
@@ -25,17 +24,28 @@ public class PalindromePermutation {
 		if(length == 0 || length == 1){
 			return true;
 		}
-		char[] chars = string.toCharArray();
-		int remainder  = length%2;
+		int half  = length/2;
+		int remainder = length%2;
+
+		String firstHalf = string.substring(0, half);
+		String secondHalf =string.substring(half+remainder);
+//		System.err.println(firstHalf+firstHalf.hashCode());
+//		System.err.println(secondHalf+secondHalf.hashCode());
+
+//		if(firstHalf.hashCode() == secondHalf.hashCode()){
+			Stack<Character> stack = new Stack<Character>();
+			secondHalf.chars().forEach(c ->{
+				stack.push(new Character((char)c));
+			});
+			String str = "";
+			while (!stack.isEmpty()) {
+				str = str+stack.pop();			
+			}
+			if(firstHalf.equals(str)){
+				return true;
+			}
+//		}
 		
-		Set<Character> set = new HashSet<Character>();
-		for(char singChar: chars){
-			set.add(singChar);
-		}
-		int size = set.size();
-		if(size <= (Math.abs(length/2)+remainder)){
-			return true;
-		}
 		return false;
 	}
 
