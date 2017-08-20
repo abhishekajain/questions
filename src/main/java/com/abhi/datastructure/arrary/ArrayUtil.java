@@ -1,20 +1,18 @@
 package com.abhi.datastructure.arrary;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.junit.Test;
 
 public class ArrayUtil {
 	
-	static int[] mergeSortedAaary(int[] a, int[] b){
+	static Integer[] mergeSortedAaary(int[] a, int[] b){
 		int aL = a.length;
 		int bL = b.length;
 		
-		int[] c = new int[aL+bL];
+		Integer[] c = new Integer[aL+bL];
 		
 		int countA  = 0;
 		int countB = 0;
@@ -53,44 +51,35 @@ public class ArrayUtil {
 		int[] a = {1,2,3,4,5};
 		int[] b = {3,5,8};
 
-		int[] c = mergeSortedAaary(a, b);
-		System.out.println(c);
+		Integer[] c = mergeSortedAaary(a, b);
+		
+		List<Integer> list = Arrays.asList(c);
+		System.out.println(list);
 	}
 	
-	static List<int[]> combinations(int amount, List<Integer> denominations){
-		List<int[]> results = new ArrayList<int[]>();
-		Collections.sort(denominations);
+	static List<List<Integer>> combinations(int amount, List<Integer> denominations){
+		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		for(Integer denomination:denominations){
 			if(amount<denomination){
 				continue;
 			}
 			int rem = amount%denomination;
 			int howMany = amount/denomination;
-			int[] resultMany = new int[howMany];
-			for(int i=0; i<resultMany.length; i++){
-				resultMany[i] = denomination;
+			List<Integer> resultMany = new ArrayList<Integer>();
+			for(int i=0; i<howMany; i++){
+				resultMany.add(denomination);
 			}
 
 			if(rem == 0){
 				results.add(resultMany);
 			}else{
 				//Recursion for remaining money
-				List<Integer> newList = new ArrayList<Integer>(denominations);
-				newList.remove(denomination);
-				List<int[]> newResults = combinations(rem, newList);
-				
-				//merge results
-				for(int[] result:newResults){
-					int[] newResultsArr = new int[howMany+result.length];
-					for(int i=0; i<resultMany.length;i++){
-						newResultsArr[i] = resultMany[i];
-					}
-					int j = 0;
-					for(int i=resultMany.length; i<newResultsArr.length; i++){
-						newResultsArr[i] = result[j];
-						j++;
-					}
-					results.add(newResultsArr);
+				List<List<Integer>> newResults = combinations(rem, denominations);				
+				//merge results in resultMany
+				for(List<Integer> result:newResults){
+					List<Integer> list = new ArrayList<Integer>(resultMany);
+					list.addAll(result);
+					results.add(list);					
 				}
 			}
 		}
@@ -104,7 +93,12 @@ public class ArrayUtil {
 		list.add(1);
 		list.add(2);
 		list.add(3);
-		List<int[]> results = combinations(32, list);
-		System.out.println(results);
+		list.add(5);
+		list.add(4);
+
+		List<List<Integer>> results = combinations(32, list);
+		results.stream().forEach(l ->{
+			System.out.println(l);
+		});
 	}
 }
