@@ -23,13 +23,16 @@ public class TwoEgg {
 		for(int index=0; index<floors.length; index++){
 			floors[index] = index+1;
 		}
-		int element = 3;
-		System.out.println("Found Element " +element+" at index:"+binarySearch(floors, element));
+		System.out.println("Found Element " +98+" at index:"+binarySearch(floors, 98));
 		
 		System.out.println(solveSeries(100));
 		
+		System.out.println("Found Element " +98+" at index:"+indexSearch(floors, 98, (int)Math.round(solveSeries(100))));
+
+
+		
 	}
-	
+	//not a best case
 	public static int binarySearch(int[] floors, int element){
 		int min = 0;
 		int max = floors.length-1;
@@ -56,6 +59,42 @@ public class TwoEgg {
 		return average;
 	}
 	
+	public static int indexSearch(int[] floors, int element, int index){
+		boolean findIt = false;
+		int safeIndex = 0;
+		int counter = index;
+		index--;
+		while(index<=floors.length){
+			if(element<floors[index]){
+				while(safeIndex<index){
+					safeIndex++;
+					if(element == floors[safeIndex]){
+						index = safeIndex;
+						break;
+					}
+				}
+			}else if(element>floors[index]){
+				safeIndex = index;
+				counter--;
+				index = index + counter;
+			}else {
+				System.out.println(index+":"+floors[index]);
+				findIt = true;
+				break;
+			}
+		}
+		
+		if(!findIt){
+			System.out.println("Didnt find element in the array:"+element);
+			return -1;
+		}
+		
+		return index;
+	}
+	//x+(x-1)+(x-2)+(x-3)+....+1=sum
+	//a1, a2, a3, ...., an series sum
+	//sum = n*(a1+an)/2
+	//in above case n=x an=1 a1=x
 	//sum = x(x+1)/2
 	public static double solveSeries(int sum){
 		//2*sum = x*x+x
