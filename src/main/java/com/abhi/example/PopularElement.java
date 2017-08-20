@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Test;
+
 public class PopularElement {
 	
-	public static void main(String[] args){
-		
+	@Test
+	public void testPopular(){		
 		int[] input = {1,2,1,1,3,4,3,7,8,5,6,7,1,2,3,5,0,7,7,7,9,2,1,1,1,4,5,6};
 		PopularCollection pC = new PopularCollection();
 		for(int i:input){
