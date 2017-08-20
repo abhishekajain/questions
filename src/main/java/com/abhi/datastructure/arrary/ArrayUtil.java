@@ -120,7 +120,7 @@ public class ArrayUtil {
 		    // maximum element
 		    int maxA = Integer.MIN_VALUE, maxB = Integer.MIN_VALUE, maxC = Integer.MIN_VALUE;
 		 
-		    // Initialize Minimum and second mimimum element
+		    // Initialize Minimum and second minimum element
 		    int minA = Integer.MAX_VALUE, minB = Integer.MAX_VALUE;
 
 			for(int i :input){

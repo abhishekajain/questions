@@ -23,8 +23,10 @@ public class TwoEgg {
 		for(int index=0; index<floors.length; index++){
 			floors[index] = index+1;
 		}
-		int element = 201;
+		int element = 3;
 		System.out.println("Found Element " +element+" at index:"+binarySearch(floors, element));
+		
+		System.out.println(solveSeries(100));
 		
 	}
 	
@@ -52,6 +54,16 @@ public class TwoEgg {
 		}
 		
 		return average;
+	}
+	
+	//sum = x(x+1)/2
+	public static double solveSeries(int sum){
+		//2*sum = x*x+x
+		//x*x+x-2*sum=0
+		//ax*x+bx+c=0
+		//(-b+^(b*b-4ac))/2a
+		//a=1, b=1, c=-2*sum
+		return (-1+Math.pow((1-4*1*-2*sum), 0.5))/2;
 	}
 	
 }
