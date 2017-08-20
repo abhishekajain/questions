@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayUtil {
@@ -85,6 +86,92 @@ public class ArrayUtil {
 		}
 		return results;
 		
+	}
+	
+	static long highestProduct(int[] input) throws IllegalArgumentException{
+		long result = 1l;
+		if(input.length<3){
+			throw new IllegalArgumentException();
+		}
+		if(input.length == 3){
+			for(int i:input){
+				result = result * i;
+			}
+		}else{
+			Arrays.sort(input);
+			result = Math.max(input[0]*input[1]*input[input.length-1], 
+					input[input.length-3]*input[input.length-2]*input[input.length-1]);
+		}
+		
+		return result;
+	}
+	
+	static long highestProductWithoutSort(int[] input){
+		long result = 1l;
+		if(input.length<3){
+			throw new IllegalArgumentException();
+		}
+		if(input.length == 3){
+			for(int i:input){
+				result = result * i;
+			}
+		}else{
+		    // Initialize Maximum, second maximum and third
+		    // maximum element
+		    int maxA = Integer.MIN_VALUE, maxB = Integer.MIN_VALUE, maxC = Integer.MIN_VALUE;
+		 
+		    // Initialize Minimum and second mimimum element
+		    int minA = Integer.MAX_VALUE, minB = Integer.MAX_VALUE;
+
+			for(int i :input){
+				if(i>maxA){
+					maxC = maxB;
+					maxB = maxA;
+					maxA = i;
+				} else if(i>maxB){
+					maxC = maxB;
+					maxB = i;
+				} else if (i>maxC) {
+					maxC = i;
+				}
+
+				if(i<minA){
+					minB = minA;
+					minA = i;
+				}else if (i<minB) {
+					minB = i;
+				}
+			}
+			
+			result = Math.max(maxA*maxB*maxC, maxA*minA*minB);
+		}		
+		return result;
+
+	}
+	
+	@Test
+	public void testHighestProduct(){
+		int[] input = {0,2,3,8};
+		Assert.assertEquals(48, highestProductWithoutSort(input));
+		
+		int[] newinput = {-10,-20, 1,2,3,8};		
+		Assert.assertEquals(1600, highestProductWithoutSort(newinput));
+		
+		int[] newinput2 = {-1,-2, 1,2,3,8};		
+		Assert.assertEquals(48, highestProductWithoutSort(newinput2));
+
+	}
+	
+	@Test
+	public void testHighestProductwithoutSort(){
+		int[] input = {0,2,3,8};
+		Assert.assertEquals(48, highestProduct(input));
+		
+		int[] newinput = {-10,-20, 1,2,3,8};		
+		Assert.assertEquals(1600, highestProduct(newinput));
+
+		int[] newinput2 = {-1,-2, 1,2,3,8};		
+		Assert.assertEquals(48, highestProduct(newinput2));
 	}
 	
 	@Test
