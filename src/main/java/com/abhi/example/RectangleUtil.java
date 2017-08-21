@@ -1,5 +1,7 @@
 package com.abhi.example;
 
+import org.junit.Test;
+
 public class RectangleUtil {
 	
 	public static class Rectangle {
@@ -39,13 +41,69 @@ public class RectangleUtil {
 	    public int getHeight() {
 	        return height;
 	    }
+
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return "X"+this.bottomY+"Y"+this.bottomY+"W"+this.width+"H"+this.height;
+		}	    
 	}
 	
 	static Rectangle commonRectangle(Rectangle rect1, Rectangle rect2){
-		
-		return Rectangle.NO_RECTANGLE;
+		//find which one is in the left
+		if(rect1.leftX<=rect2.leftX){//rect1 in the left
+			return commonRectangleSorted(rect1, rect2);
+		}else{//rect2 in the left
+			return commonRectangleSorted(rect2, rect1);
+		}		
 	}
 	
+	static Rectangle commonRectangleSorted(Rectangle rect1, Rectangle rect2){
+		int x = Integer.MIN_VALUE;
+		int y = Integer.MIN_VALUE;
+		int width = Integer.MIN_VALUE;
+		int height = Integer.MIN_VALUE;
+		if(rect1.bottomY<=rect2.bottomY){ 
+			x = rect2.leftX;
+			y = rect2.bottomY;
+			if((rect2.leftX+rect2.width)<(rect1.leftX+rect1.width) && (rect2.bottomY+rect2.height)<(rect1.bottomY+rect1.height)){
+				width = rect2.width;
+				height = rect2.height;
+			}else if((rect2.leftX+rect2.width)<(rect1.leftX+rect1.width)){
+				width = rect2.width;
+				height = rect1.bottomY+rect1.height-rect2.bottomY;
+			}else if((rect2.bottomY+rect2.height)<(rect1.bottomY+rect1.height)){
+				width = rect1.leftX+rect1.width-rect2.leftX;
+				height = rect2.height;
+			}else{
+				width = rect1.leftX+rect1.width-rect2.leftX;
+				height = rect1.bottomY+rect1.height-rect2.bottomY;
+			}
+		}else{
+			x = rect2.leftX;
+			y = rect1.bottomY;
+			if((rect2.leftX+rect2.width)>(rect1.leftX+rect1.width) && (rect2.bottomY+rect2.height)>(rect1.bottomY+rect1.height)){
+				width = rect1.leftX+rect1.width-rect2.leftX;
+				height = rect1.bottomY+rect1.height-rect1.bottomY;
+			}else if((rect2.leftX+rect2.width)>(rect1.leftX+rect1.width)){
+				width = rect1.leftX+rect1.width-rect2.leftX;
+				height = rect2.bottomY+rect2.height-rect1.bottomY;
+			} else if((rect2.bottomY+rect2.height)>(rect1.bottomY+rect1.height)){
+				width = rect2.leftX+rect2.width-rect2.leftX;
+				height = rect1.height;
+			}else{
+				width = rect2.width;
+				height = rect2.bottomY+rect2.height-rect1.bottomY;
+			}
+		}
+		
+		if(height>0 &&  width>0){
+			return new Rectangle(x, y, width, height);
+		}
+		
+		return Rectangle.NO_RECTANGLE;
+
+	}
 	public static class Line{
 		
 		int m;
@@ -62,6 +120,14 @@ public class RectangleUtil {
 			int[] result = {x,y};
 			return result;
 		}
+	}
+	
+	@Test
+	public void testCommonRectangle(){
+		Rectangle rect1 = new Rectangle(0, 0, 3, 3);
+		Rectangle rect2 = new Rectangle(3, 3, 1, 2);
+		Rectangle rect = commonRectangle(rect1, rect2);
+		System.out.println(rect);
 	}
 
 }
