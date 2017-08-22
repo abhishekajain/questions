@@ -1,5 +1,6 @@
 package com.abhi.example;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.junit.Test;
 
 public class RectangleUtil {
@@ -12,11 +13,13 @@ public class RectangleUtil {
 	    // coordinates of bottom left corner
 	    private int leftX;
 	    private int bottomY;
+	    
+
 
 	    // dimensions
 	    private int width;
 	    private int height;
-
+	    
 	    public Rectangle() {}
 
 	    public Rectangle(int leftX, int bottomY, int width, int height) {
@@ -45,8 +48,28 @@ public class RectangleUtil {
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub
-			return "X"+this.bottomY+"Y"+this.bottomY+"W"+this.width+"H"+this.height;
+			return "X"+this.leftX+"Y"+this.bottomY+"W"+this.width+"H"+this.height;
 		}	    
+	}
+	/**
+	 * left = max(r1.left, r2.left)
+	 * bottom = max(r1.bottom, r2.bottom)
+	 * 
+	 * right = min(r1.right, r2.right)
+	 * top = min(r1.top, r2.top)
+
+	 */
+	static Rectangle commonRectangleAlgo(Rectangle rect1, Rectangle rect2){
+		int leftX = Math.max(rect1.leftX, rect2.leftX);
+		int bottomY = Math.max(rect1.bottomY, rect2.bottomY);
+		
+		int rightX = Math.min(rect1.leftX+rect1.width, rect2.leftX+rect2.width);
+		int topY = Math.min(rect1.bottomY+rect1.height, rect2.bottomY+rect2.height);
+		
+		if (leftX < rightX && bottomY < topY) {
+			return new Rectangle(leftX, bottomY, rightX-leftX, topY-bottomY);
+		}
+		return Rectangle.NO_RECTANGLE;
 	}
 	
 	static Rectangle commonRectangle(Rectangle rect1, Rectangle rect2){
@@ -125,8 +148,16 @@ public class RectangleUtil {
 	@Test
 	public void testCommonRectangle(){
 		Rectangle rect1 = new Rectangle(0, 0, 3, 3);
-		Rectangle rect2 = new Rectangle(3, 3, 1, 2);
+		Rectangle rect2 = new Rectangle(1, -1, 5, 3);
 		Rectangle rect = commonRectangle(rect1, rect2);
+		System.out.println(rect);
+	}
+	
+	@Test
+	public void testCommonRectangleAlgo(){
+		Rectangle rect1 = new Rectangle(0, 0, 3, 3);
+		Rectangle rect2 = new Rectangle(1, -1, 5, 3);
+		Rectangle rect = commonRectangleAlgo(rect1, rect2);
 		System.out.println(rect);
 	}
 
