@@ -233,7 +233,7 @@ public class ArrayUtil {
         // input[i], increment input[input[i]%k] by k
         for (int i = 0; i< input.length; i++){
 //        	System.out.println(input[i]%k);
-        	int indexToIncrease = input[i];
+        	int indexToIncrease = input[i]%k;
         	input[indexToIncrease] = input[indexToIncrease] + k; 
         }
         // Find index of the maximum repeating element
@@ -247,9 +247,9 @@ public class ArrayUtil {
             }
         }
  
-        /* Uncomment this code to get the original array back
+        /* Uncomment this code to get the original array back*/
         for (int i = 0; i< input.length; i++)
-          input[i] = input[i]%k; */
+          input[i] = input[i]%k; 
  
         // Return index of the maximum element
         return result;
