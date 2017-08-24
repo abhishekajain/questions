@@ -1,6 +1,8 @@
-package com.abhi.datastructure;
+package com.abhi.datastructure.tree;
 
 import java.util.LinkedList;
+
+import org.junit.Test;
 
 //This class represents a directed graph using adjacency list
 //representation
@@ -92,7 +94,8 @@ class Graph {
 		DFSUtil(v, visited);
 	}
 
-	public static void main(String args[]) {
+	@Test
+	public static void test() {
 		Graph g = new Graph(4);
 
 		g.addEdge(0, 1);

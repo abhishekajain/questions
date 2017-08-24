@@ -1,4 +1,4 @@
-package com.abhi.datastructure;
+package com.abhi.datastructure.arrary;
 
 public class ArrayCombinationsUtil {
 

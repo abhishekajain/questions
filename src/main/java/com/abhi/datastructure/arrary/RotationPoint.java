@@ -1,4 +1,4 @@
-package com.abhi.datastructure;
+package com.abhi.datastructure.arrary;
 
 /**
  * String[] words = new String[]{ "ptolemaic", "retrograde", "supplant",

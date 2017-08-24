@@ -8,12 +8,51 @@ package com.abhi.datastructure;
 
 import java.util.Random;
 
+import org.junit.Test;
+
 public class Shuffle {
 
 	private static Random rand = new Random();
 
 	private static int getRandom(int floor, int ceiling) {
 		return rand.nextInt((ceiling - floor) + 1) + floor;
+	}
+	/**
+	 *      * @param bound the upper bound (exclusive).  Must be positive.
+     * @return the next pseudorandom, uniformly distributed {@code int}
+     *         value between zero (inclusive) and {@code bound} (exclusive)
+     *         from this random number generator's sequence
+     * @throws IllegalArgumentException if bound is not positive
+	 * @return
+	 */
+	private static int getRandom5() {
+		//nextInt(5) exclusive 5 but inclusive 0
+		return rand.nextInt(5) + 1;
+	}
+	
+	private static int getRandom7() {
+		//nextInt(5) exclusive 5 but inclusive 0
+		return rand.nextInt(7) + 1;
+	}
+	
+	public static int getRand5(){
+		int randNumber = getRandom7();
+		if(randNumber<=5){
+			return randNumber;
+		}else{
+			return getRand5();
+		}
+	}
+	
+	int[] input7 = {1,2,3,4,5,6,7};
+	
+	public static int getRand7(){
+		int randNumber = getRandom5();
+		if(randNumber<=7){
+			return randNumber;
+		}else{
+			return getRand7();
+		}
 	}
 
 	public static void shuffle(int[] theArray) {
@@ -41,4 +80,15 @@ public class Shuffle {
 		}
 	}
 
+	@Test
+	public void testgetRand7(){
+		System.out.println(35%7);
+		System.out.println(34%7);
+		System.out.println(33%7);
+		System.out.println(32%7);
+		System.out.println(31%7);
+		System.out.println(30%7);
+		System.out.println(29%7);
+		System.out.println(28%7);
+	}
 }

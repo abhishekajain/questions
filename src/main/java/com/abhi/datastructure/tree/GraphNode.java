@@ -1,4 +1,4 @@
-package com.abhi.datastructure;
+package com.abhi.datastructure.tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
