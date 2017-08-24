@@ -290,4 +290,91 @@ public class ArrayUtil {
 
 
 	}
+	
+//	Longest Increasing Subsequence
+//	Find the longest increasing subsequence of a given sequence / array.
+//
+//	In other words, find a subsequence of array in which the subsequence’s elements are in strictly increasing order, and in which the subsequence is as long as possible. 
+//	This subsequence is not necessarily contiguous, or unique.
+//	In this case, we only care about the length of the longest increasing subsequence.
+//
+//	Example :
+//
+//	Input : [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+//	Output : 6
+//	The sequence : [0, 2, 6, 9, 13, 15] or [0, 4, 6, 9, 11, 15] or [0, 4, 6, 9, 13, 15]
+	public static int longestIncreasingSequence(int[] input){
+		if(input == null || input.length == 0){
+			return 0;
+		}
+		if(input.length == 1){
+			return 1;
+		}
+		int[][] seq = null;
+		for(int i=input.length-1;i>=0;i--){
+			seq = createMaxSeq(seq ,input[i]);
+		}
+		
+		int maxLength = 0;
+		System.out.println(seq);
+		for(int index = 0 ; index<seq.length; index++){
+			if(seq[index].length>maxLength){
+				maxLength = seq[index].length;
+			}
+		}
+		return maxLength;
+	}
+	
+	@Test
+	public void testLongestIncreasingSequence(){
+		int[] input = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
+		Assert.assertEquals(6, longestIncreasingSequence(input));
+	}
+	private static int[][] createMaxSeq(int[][] input, int element){
+		if(input == null){
+			input = new int [1][1];
+			int[] seq = new int[1];
+			seq[0] = element;
+			input[0] = seq;
+			return input;
+		}
+		List<List<Integer>> newSeqs = new ArrayList<List<Integer>>();
+		for(int j=0; j<input.length;j++){
+			if(element<input[j][0]){
+				List<Integer> seq = new ArrayList<Integer>();	
+				seq.add(element);
+				for(int i=0; i<input[j].length;i++){
+					seq.add(input[j][i]);
+				}
+				newSeqs.add(seq);
+			}				
+		}
+
+		for(int j=0; j<input.length;j++){
+			List<Integer> seq = new ArrayList<Integer>();	
+			for(int i=0; i<input[j].length;i++){
+				seq.add(input[j][i]);
+			}
+			newSeqs.add(seq);
+		}
+	
+		List<Integer> seq = new ArrayList<Integer>();	
+		seq.add(element);
+		newSeqs.add(seq);
+		
+		int[][] result = new int[newSeqs.size()][];
+		int count = 0;
+		for(List<Integer> seq1: newSeqs){
+			int[] intSeq = new int[seq1.size()];
+			result[count] = intSeq;
+			int newCount = 0;
+			for(Integer i:seq1){
+				intSeq[newCount] = i;
+				newCount++;
+			}
+			count++;
+		}
+		
+		return result;
+	}
 }
