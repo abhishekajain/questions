@@ -1,5 +1,7 @@
 package com.abhi.algo;
 
+import org.junit.Test;
+
 public class SortHelper {
 	/**
 	 * 1 for j = 2 to A.length 
@@ -27,7 +29,8 @@ public class SortHelper {
 		return input;
 	}
 
-	public static void main(String[] args) {
+	@Test
+	public void tesinsertionSort() {
 		int[] input = { 0, -1, 56, 2, -3, 1 };
 		print(input);
 		System.out.println("");

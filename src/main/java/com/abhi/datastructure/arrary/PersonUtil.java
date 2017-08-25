@@ -1,4 +1,4 @@
-package com.abhi.algo;
+package com.abhi.datastructure.arrary;
 
 import java.util.HashMap;
 import java.util.Map;
