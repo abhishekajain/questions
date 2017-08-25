@@ -7,8 +7,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
-
 public class ArrayUtil {
 
 	static Integer[] mergeSortedAaary(int[] a, int[] b) {
@@ -393,5 +391,79 @@ public class ArrayUtil {
 		}
 		
 		return result;
+	}
+	
+	/* Standard Binary Search function */
+//	return index of the key
+	// low index to start
+	// high index to end/
+	// it is sorted array
+	static int binarySearch(int arr[], int low, int high, int key) {
+		if(low>high){
+			return -1;
+		}
+		int middle = (low+high)/2;
+		
+		if(arr[middle] == key){
+			return middle;
+		} else if(key>arr[middle]){
+			return binarySearch(arr, middle+1, high, key);
+		} else{
+			return binarySearch(arr, low, middle-1, key);
+		}
+	}
+	
+	/*
+	 * Function to get pivot. For array 3, 4, 5, 6, 1, 2 it returns 3 (index of
+	 * 6)
+	 */
+	static int findPivot(int arr[], int low, int high) {
+		if(low>high){
+			return -1;
+		}
+		if(low == high){
+			return low;
+		}
+		
+		int middle = (low+high)/2;
+		
+		//check if found pivot first
+		if(arr[middle] > arr[middle+1]){// if middle is greater then next element it is pivot since it is sorted list
+			// and next element should be higher if it is before or
+			return middle;
+		} else if( arr[middle] < arr[middle-1]){
+			return middle-1;
+		} 
+		
+		if (arr[low] >= arr[middle])//if low value is greater then middle search pivot on lower side                 
+			return findPivot(arr, low, middle - 1);
+		return findPivot(arr, middle + 1, high);
+
+	}	
+	
+	/*
+	 * Searches an element key in a pivoted sorted array arrp[] of size n
+	 */
+	static int pivotedBinarySearch(int arr[], int n, int key) {
+
+	}
+	
+	@Test
+	public void testpivotedBinarySearch() {
+		// Let us search 3 in below array
+		int arr1[] = { 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+		int n = arr1.length;
+		int key = 3;
+		System.out.println("Index of the element is: " + findPivot(arr1, 0, arr1.length-1));
+		
+		int[] arr2 = {3, 4, 5, 6, 1, 2};
+		System.out.println("Index of the element is: " + findPivot(arr2, 0, arr2.length-1));
+		
+		
+		int[] arr3 = {6, 1, 2, 3, 4, 5};
+		System.out.println("Index of the element is arr3: " + findPivot(arr3, 0, arr3.length-1));
+		
+		int[] arr4 = {3, 4, 5, 6, 7, 1};
+		System.out.println("Index of the element is arr3: " + findPivot(arr4, 0, arr4.length-1));
 	}
 }
