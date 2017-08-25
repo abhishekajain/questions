@@ -118,6 +118,57 @@ public class LinkedList {
 		head = previous;
 		return head;
 	}
+//	Reverse a linked list from position m to n. Do it in-place and in one-pass.
+//	For example:
+//	Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+//	return 1->4->3->2->5->NULL.	
+	public static LinkedListNode reverseLinkList(LinkedListNode head, int m, int n){
+		if(head == null){
+			return head;
+		}
+		if(n<=m){
+			return head;//nothing to do//what will happen when m =1
+		}
+		LinkedListNode previous = null;
+		LinkedListNode current = head;
+		LinkedListNode next = null;
+		LinkedListNode headToTrack = null;
+		int index = 1;
+		while(current != null && index<m){
+			index++;
+			previous = current;
+			current = current.next;
+		}
+		if(m==1){
+		    head = reverseLinkList(current, n);    
+		}
+		else{
+		    previous.next = reverseLinkList(current, n);
+		}
+//		head = previous;
+		return head;
+	}
+	
+	public static LinkedListNode reverseLinkList(LinkedListNode head, int n){
+		if(head == null){
+			return head;
+		}
+		LinkedListNode previous = null;
+		LinkedListNode current = head;
+		LinkedListNode next = null;
+		int index = 1;
+
+		while(current != null && index<n){
+			index++;
+			next = current.next;
+			current.next = previous;
+			previous = current;
+			current = next;
+		}
+		head.next = current;
+		head = previous;
+		return head;
+	}
 	
 	// A simple and tail recursive function to reverse
     // a linked list.  prev is passed as NULL initially.
@@ -211,9 +262,17 @@ public class LinkedList {
         }
     }
     
-	public static LinkedListNode reverseLinkList(LinkedListNode head, int m){
-
-		return head;
+	@Test
+	public void testReverseLinkListWithBound(){
+		LinkedListNode head = new LinkedListNode(1);
+		head.next = new LinkedListNode(2);
+		head.next.next = new LinkedListNode(3);
+//		head.next.next.next = new LinkedListNode(4);
+//		head.next.next.next.next = new LinkedListNode(5);
+		System.out.println("testReverseLinkListWithBound-->");print(head);
+		head = reverseLinkList(head, 1, 2);
+		print(head);
+		System.out.println("testReverseLinkListWithBound-->");
 	}
 	
 	@Test
