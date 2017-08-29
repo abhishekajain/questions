@@ -17,4 +17,8 @@
 #Logs
 **/*.log
 **/log*/
+#IntelliJ
+**/.idea/
+*.iml
+
 

@@ -441,12 +441,75 @@ public class ArrayUtil {
 
 	}	
 	
-	/*
-	 * Searches an element key in a pivoted sorted array arrp[] of size n
-	 */
-	static int pivotedBinarySearch(int arr[], int n, int key) {
-
+	static int getNonZeroLenght(int[] input){
+		int zeroCount = getZeroCount(input);
+		
+		int nonZeroLength = input.length - zeroCount;
+		if(nonZeroLength >0){
+			swapZeros(input, zeroCount);
+		}		
+		return nonZeroLength;		
 	}
+	
+	static int getZeroCount(int[] input){
+		int zeroCount = 0;
+		for(int element:input){
+			if(element == 0){
+				zeroCount++;
+			}
+		}
+		return zeroCount;
+	}
+	
+	static void swapZeros(int[] input, int zeroCount){
+		int inputLength = input.length;
+		int nonZeroLength = inputLength - zeroCount;
+		
+		for(int i=0; i<nonZeroLength; i++){			
+			if(inputLength <= nonZeroLength){
+				break;
+			}
+			
+			int element = input[i];
+			if(element == 0){
+				int temp = 0;
+				while(temp == 0){
+					temp = input[--inputLength];
+					input[inputLength] = 0;
+				}
+				input[i] = temp;
+			}
+		}
+	}
+	
+	@Test
+	public void testgetNonZeroLenght(){
+		System.out.println("testgetNonZeroLenght-->");
+
+		int arr1[] = { 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+		Assert.assertEquals(9, getNonZeroLenght(arr1));
+		
+		int arr2[] = { 0, 6, 7, 0, 9, 0, 1, 2, 3 };
+		Assert.assertEquals(6, getNonZeroLenght(arr2));
+		
+		int arr3[] = { 0, 0, 0, 0, 9, 10, 1, 2, 3 };
+		Assert.assertEquals(5, getNonZeroLenght(arr3));
+		
+		int arr4[] = { 1, 4, 5, 0, 0, 0, 0, 0, 0 };
+		Assert.assertEquals(3, getNonZeroLenght(arr4));
+		
+		
+		int arr5[] = { 0, 4, 5, 1, 0, 0, 0, 0, 0 };
+		Assert.assertEquals(3, getNonZeroLenght(arr5));
+		
+		System.out.println("<--testgetNonZeroLenght");
+	}
+//	/*
+//	 * Searches an element key in a pivoted sorted array arrp[] of size n
+//	 */
+//	static int pivotedBinarySearch(int arr[], int n, int key) {
+//
+//	}
 	
 	@Test
 	public void testpivotedBinarySearch() {
