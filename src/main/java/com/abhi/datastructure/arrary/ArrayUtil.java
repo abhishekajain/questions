@@ -529,4 +529,61 @@ public class ArrayUtil {
 		int[] arr4 = {3, 4, 5, 6, 7, 1};
 		System.out.println("Index of the element is arr3: " + findPivot(arr4, 0, arr4.length-1));
 	}
+	
+	public static ArrayList<Integer> maxset(ArrayList<Integer> a) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<ArrayList<Integer>> holder = new ArrayList<ArrayList<Integer>>();
+		int maxSum = 0;
+		int counter = 0;
+		for(Integer element:a){
+			if(element>=0){
+				
+			}else{
+				
+			}
+		}
+		return list;
+	
+	}
+	
+	 // Function which pushes all zeros to end of an array.
+    public static int pushZerosToEnd(int[] arr) {
+    	int count = 0;//count of non zero elements
+    	int length = arr.length;// length of array
+    	for(int i=0;i<length;i++){//full length scan of array O(n)
+    		if(arr[i] !=0){
+    			arr[count++] = arr[i];//move to front and increase count of non zero element
+    		}
+    	}
+    	int countOfNonZero = count;//count of non zero elements
+
+    	while(count<length){ //O(n-countOfNonZero)
+    		arr[count++] = 0;
+    	}
+    	return countOfNonZero;//O(2N-countOfNonZero)
+    }
+    
+	@Test
+	public void testpushZerosToEnd(){
+		System.out.println("testpushZerosToEnd-->");
+
+		int arr1[] = { 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+		Assert.assertEquals(9, pushZerosToEnd(arr1));
+		
+		int arr2[] = { 0, 6, 7, 0, 9, 0, 1, 2, 3 };
+		Assert.assertEquals(6, pushZerosToEnd(arr2));
+		
+		int arr3[] = { 0, 0, 0, 0, 9, 10, 1, 2, 3 };
+		Assert.assertEquals(5, pushZerosToEnd(arr3));
+		
+		int arr4[] = { 1, 4, 5, 0, 0, 0, 0, 0, 0 };
+		Assert.assertEquals(3, pushZerosToEnd(arr4));
+		
+		
+		int arr5[] = { 0, 4, 5, 1, 0, 0, 0, 0, 0 };
+		Assert.assertEquals(3, pushZerosToEnd(arr5));
+		
+		System.out.println("<--testpushZerosToEnd");
+	}
+	
 }
