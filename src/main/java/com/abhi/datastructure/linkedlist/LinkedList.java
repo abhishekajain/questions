@@ -1,4 +1,4 @@
-package com.abhi.datastructure;
+package com.abhi.datastructure.linkedlist;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,5 @@
 package com.abhi.example;
 
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.junit.Test;
 
 public class RectangleUtil {
