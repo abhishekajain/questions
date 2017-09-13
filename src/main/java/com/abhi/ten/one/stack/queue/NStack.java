@@ -43,7 +43,7 @@ public class NStack {
 	
 	public int pop(int index) {
 		if(isStackEmpty(index)) {
-			throw new NoSuchElementException();
+			throw new NoSuchElementException("This stack is empty :"+index);
 		}
 		int popIndex = top[index];
 		int element = this.elements[popIndex];
@@ -53,7 +53,7 @@ public class NStack {
 	
 	public int peek(int index) {
 		if(isStackEmpty(index)) {
-			throw new NoSuchElementException();
+			throw new NoSuchElementException("This stack is empty :"+index);
 		}
 		int peekIndex = top[index];
 		int element = this.elements[peekIndex];

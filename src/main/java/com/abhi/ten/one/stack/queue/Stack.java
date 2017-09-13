@@ -19,7 +19,7 @@ public class Stack {
 	}
 	
 	public int push(int element) {
-		if(top == size -1) {
+		if(isFull()) {
 			throw new IllegalArgumentException("Stack is full");
 		}
 		elements[++top] = element;
@@ -45,6 +45,13 @@ public class Stack {
 	
 	public boolean isEmpty() {
 		if(this.top == -1) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isFull() {
+		if(top == size -1) {
 			return true;
 		}
 		return false;
