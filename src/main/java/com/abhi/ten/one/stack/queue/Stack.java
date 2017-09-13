@@ -2,6 +2,8 @@ package com.abhi.ten.one.stack.queue;
 
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 public class Stack {
 	
 	int[] elements;
@@ -46,6 +48,11 @@ public class Stack {
 			return true;
 		}
 		return false;
+	}
+	
+	@Test
+	public void testPush() {
+		
 	}
 
 }
