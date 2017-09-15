@@ -22,6 +22,10 @@ public class LinkedList {
 		return current;
 	}
 	
+	// x1 --> x2 --> x3
+//	x2.prev.next = x2.next
+//	x2.next.prev = x2.prev
+//	x1 --> x3
 	public static void delete(LinkedList list, Node element) {
 		if(element.prev != null) {		
 			element.prev.next = element.next;
