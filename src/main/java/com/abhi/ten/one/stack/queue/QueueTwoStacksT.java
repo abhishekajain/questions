@@ -1,9 +1,9 @@
-package com.abhi.datastructure;
+package com.abhi.ten.one.stack.queue;
 
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class QueueTwoStacks<T> {
+public class QueueTwoStacksT<T> {
 
 	Stack<T> stackPush = new Stack<T>();
 	Stack<T> stackPop = new Stack<T>();

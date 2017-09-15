@@ -8,45 +8,6 @@ import org.junit.Test;
 
 public class LinkedList {
 
-	static class LinkedListNode {
-		public int value;
-		public LinkedListNode next;
-
-		public LinkedListNode(int value) {
-			this.value = value;
-			this.next = null;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((next == null) ? 0 : next.value);
-			result = prime * result + value;
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			LinkedListNode other = (LinkedListNode) obj;
-			if (next == null) {
-				if (other.next != null)
-					return false;
-			} else if (!next.equals(other.next))
-				return false;
-			if (value != other.value)
-				return false;
-			return true;
-		}
-
-	}
-
 	public LinkedListNode head;// firstNode
 
 	public static boolean containsCycle(LinkedListNode head) {
@@ -291,6 +252,42 @@ public class LinkedList {
 		print(head);
 		head = reverseLinkList(head);
 		print(head);
+	}
+	
+	static LinkedListNode deleteNode(LinkedListNode head, int value) {
+		if(head == null){
+			return head;
+		}
+		
+		if(head.value == value){
+			return head.next;//moved head to next and deleted head
+		}
+		
+		LinkedListNode current = head;
+		while(current.next != null){
+			if(current.next.value == value){
+				current.next = current.next.next;
+				return head;//no need to change head
+			}
+			current = current.next;
+		}
+		
+		return head;//value not found nothing deleted
+	}
+	
+	static void appendToEnd(LinkedListNode head, int data){
+		LinkedListNode newEndNode = new LinkedListNode(data);
+		if(head == null){
+			head = newEndNode;
+			return;
+		}
+		
+		LinkedListNode current = head;
+		while(current.next != null){
+			current = current.next;
+		}
+		
+		current.next = newEndNode;
 	}
 
 }

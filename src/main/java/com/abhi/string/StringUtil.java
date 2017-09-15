@@ -139,5 +139,27 @@ public class StringUtil {
 		Assert.assertTrue(isPalindrome("abbccbba"));
 		Assert.assertFalse(isPalindrome("geeks"));
 	}
+	
+	//(i.e., “waterbottle” is a rotation of “erbottlewat”). erbottlewaterbottlewat
+	public static boolean isRotation(String s1, String rotation) {
+		
+		if(s1 == null && rotation == null){
+			return true;
+		}
+		if(s1 == null || rotation == null){
+			return false;
+		}
+		
+		if(s1.length() != rotation.length()){
+			return false;
+		}
+		
+		return (s1+s1).contains(rotation);
+	}
+	
+	@Test
+	public void testIsRotation(){
+		Assert.assertTrue(isRotation("erbottlewat", "waterbottle"));
+	}
 
 }
