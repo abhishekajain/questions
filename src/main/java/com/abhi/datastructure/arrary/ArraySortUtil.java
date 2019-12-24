@@ -51,6 +51,36 @@ public class ArraySortUtil {
 			this.swap(largestElementIndex, unSortedIndex);
 		}
 	}
+	
+	public void insertionSort(){
+		this.printArray();
+		for(int i=1; i<this.size; i++) {
+			this.insert(i, this.elements[i]);
+		}
+		this.printArray();
+	}
+	
+	private void insert(int sortedIndex, int element) {
+		boolean isInserted = false;
+		while(sortedIndex > 0) {
+			if(this.elements[sortedIndex-1] > element) {
+//				shift one element to right mean up
+				this.elements[sortedIndex] = this.elements[sortedIndex-1];
+			}else if(this.elements[sortedIndex-1] <= element) {
+//				found insertion point
+				this.elements[sortedIndex] = element;
+				isInserted = true;
+				break;
+			}
+			sortedIndex--;
+		}
+		if(!isInserted) {
+//			no insertion point found and reach to end of array
+			this.elements[0] = element;
+		}
+	}
+	
+	
 
 
 }

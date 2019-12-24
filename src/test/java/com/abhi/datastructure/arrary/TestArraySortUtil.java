@@ -18,6 +18,17 @@ public class TestArraySortUtil {
 		}
 	}
 	
+	@Test
+	public void testInsertionSort() {
+		int count = 10;
+		while(count >= 0) {
+			ArraySortUtil sortUtil = new ArraySortUtil(count*10);
+			sortUtil.insertionSort();
+			this.testSortedAssert(sortUtil.getElements());
+			count--;
+		}
+	}
+	
 	private void testSortedAssert(int[] elements) {
 		assertTrue(this.validateSorting(elements));
 	}
