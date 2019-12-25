@@ -2,18 +2,19 @@ package com.abhi.datastructure.arrary;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class TestArraySortUtil {
-	
-	
+		
 	@Test
 	public void testSelectionSort() {
 		int count = 10;
 		while(count >= 0) {
 			ArraySortUtil sortUtil = new ArraySortUtil(count*10);
 			sortUtil.selectionSort();
-			this.testSortedAssert(sortUtil.getElements());
+			assertTrue(Arrays.equals(sortUtil.getSortedElements(), sortUtil.getElements()));
 			count--;
 		}
 	}
@@ -23,23 +24,21 @@ public class TestArraySortUtil {
 		int count = 10;
 		while(count >= 0) {
 			ArraySortUtil sortUtil = new ArraySortUtil(count*10);
-			sortUtil.insertionSort();
-			this.testSortedAssert(sortUtil.getElements());
+			sortUtil.insertionSort(1);
+			assertTrue(Arrays.equals(sortUtil.getSortedElements(), sortUtil.getElements()));
 			count--;
 		}
 	}
 	
-	private void testSortedAssert(int[] elements) {
-		assertTrue(this.validateSorting(elements));
-	}
-	
-	private boolean validateSorting(int[] elements) {
-		for(int i=0; i<elements.length-1; i++) {
-			if(elements[i] > elements[i+1]) {
-				return false;
-			}
+	@Test
+	public void testShellSort() {
+		int count = 10;
+		while(count >= 0) {
+			ArraySortUtil sortUtil = new ArraySortUtil(count*10);
+			sortUtil.shellSort();
+			assertTrue(Arrays.equals(sortUtil.getSortedElements(), sortUtil.getElements()));
+			count--;
 		}
-		return true;
 	}
 
 }

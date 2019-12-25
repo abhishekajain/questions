@@ -7,18 +7,26 @@ public class ArraySortUtil {
 	
 	private Random random = new Random();
 	private int[] elements;
+	private int[] sortedElements;
 	private int size;
 	
 	public ArraySortUtil(int size) {
 		this.size = size;
 		this.elements = new int[size];
+		this.sortedElements = new int[size];
 		for(int i=0; i<this.size; i++) {
 			this.elements[i] = this.random.nextInt(100) + 1;
+			this.sortedElements[i] = this.elements[i];
 		}
+		Arrays.sort(this.sortedElements);
 	}
 	
 	public int[] getElements() {
 		return this.elements;
+	}
+	
+	public int[] getSortedElements() {
+		return this.sortedElements;
 	}
 	
 	public void printArray() {
@@ -52,17 +60,15 @@ public class ArraySortUtil {
 		}
 	}
 	
-	public void insertionSort(){
-		this.printArray();
-		for(int i=1; i<this.size; i++) {
-			this.insert(i, this.elements[i]);
+	public void insertionSort(int gap){
+		for(int i=gap; i<this.size; i=i+gap) {
+			this.insertion(i, this.elements[i], gap);
 		}
-		this.printArray();
 	}
 	
 	private void insert(int sortedIndex, int element) {
 		boolean isInserted = false;
-		while(sortedIndex > 0) {
+		while(sortedIndex > 0 && !isInserted) {
 			if(this.elements[sortedIndex-1] > element) {
 //				shift one element to right mean up
 				this.elements[sortedIndex] = this.elements[sortedIndex-1];
@@ -70,7 +76,6 @@ public class ArraySortUtil {
 //				found insertion point
 				this.elements[sortedIndex] = element;
 				isInserted = true;
-				break;
 			}
 			sortedIndex--;
 		}
@@ -80,7 +85,31 @@ public class ArraySortUtil {
 		}
 	}
 	
+	private void insertion(int sortedIndex, int element, int gap) {
+//		for loop to find insertion point
+//		insertion point at the end of the array
+//		insertion point if before element is less than equal to element
+		while(sortedIndex > 0 && this.elements[sortedIndex-gap] > element) {
+//			shift one element to right/up untill find insertion point
+			this.elements[sortedIndex] = this.elements[sortedIndex-gap];
+			sortedIndex = sortedIndex-gap;
+		}
+//		found insertion point
+		this.elements[sortedIndex] = element;
+	}
 	
-
-
+	public void shellSort() {
+		int gap = this.size/9;
+		while(gap >= 0) {
+			if(gap == 0) {
+				gap = 1;
+			}
+			this.insertionSort(gap);
+			if(gap == 1) {
+				break;
+			}
+			gap = gap/9;
+		}	
+		
+	}
 }
