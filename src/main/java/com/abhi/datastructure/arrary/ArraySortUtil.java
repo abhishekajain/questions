@@ -61,7 +61,7 @@ public class ArraySortUtil {
 	}
 	
 	public void insertionSort(int gap){
-		for(int i=gap; i<this.size; i=i+gap) {
+		for(int i=gap; i<this.size; i++) {
 			this.insertion(i, this.elements[i], gap);
 		}
 	}
@@ -89,18 +89,17 @@ public class ArraySortUtil {
 //		for loop to find insertion point
 //		insertion point at the end of the array
 //		insertion point if before element is less than equal to element
-		while(sortedIndex > 0 && this.elements[sortedIndex-gap] > element) {
-//			shift one element to right/up untill find insertion point
+		while(sortedIndex >= gap && this.elements[sortedIndex-gap] > element) {
+//			shift one element to right/up until find insertion point
 			this.elements[sortedIndex] = this.elements[sortedIndex-gap];
-			sortedIndex = sortedIndex-gap;
+			sortedIndex -= gap;
 		}
 //		found insertion point
 		this.elements[sortedIndex] = element;
 	}
 	
 	public void shellSort() {
-		int gap = this.size/9;
-		while(gap >= 0) {
+		for(int gap = this.size/9; gap >= 0; gap /= 9) {
 			if(gap == 0) {
 				gap = 1;
 			}
@@ -108,8 +107,6 @@ public class ArraySortUtil {
 			if(gap == 1) {
 				break;
 			}
-			gap = gap/9;
-		}	
-		
+		}			
 	}
 }
