@@ -14,11 +14,10 @@ public class LinkedList {
 		Set<LinkedListNode> set = new HashSet<LinkedListNode>();
 
 		while (head != null) {
-			set.add(head);
-			head = head.next;
-			if (set.contains(head)) {
+			if(!set.add(head)) {
 				return true;
 			}
+			head = head.next;
 		}
 		return false;
 	}
