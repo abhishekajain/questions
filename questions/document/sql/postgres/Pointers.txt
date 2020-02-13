@@ -1,0 +1,3 @@
+sudo -u postgres psql
+ALTER USER postgres PASSWORD 'postgres';
+/etc/postgres/9.4/main/pg_hba.conf

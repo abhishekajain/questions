@@ -1,0 +1,16 @@
+-----------------------------------------------------------------------------------------------------------------------
+How to create new branch with git
+-----------------------------------------------------------------------------------------------------------------------
+git fetch
+git checkout -b feature/document origin master
+git push -u origin feature/document
+-----------------------------------------------------------------------------------------------------------------------
+how to commit -a (all tracked files) and push
+-----------------------------------------------------------------------------------------------------------------------
+git commit -a 
+git push
+
+
+git fetch origin <master>
+git checkout -b feature/document origin/feature/document
+git merge master
