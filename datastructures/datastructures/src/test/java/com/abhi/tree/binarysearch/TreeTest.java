@@ -16,6 +16,7 @@ public class TreeTest {
         tree.add(25);
         tree.add(19);
         tree.add(4);
-        System.out.println(tree.depthFirstInOrderTraversal());
+        tree.depthFirstInOrderRecursive();
+        assert true;
     }
 }

@@ -1,7 +1,5 @@
 package com.abhi.tree.binarysearch;
 
-import java.util.List;
-
 public class TreeNode {
 
     private int  data;
@@ -36,33 +34,61 @@ public class TreeNode {
         this.data = data;
     }
 
-    public void add(int value){
-        if(value == this.data){
+    public void add(int data){
+        if(data == this.data){
             return;
-        }else if(value < this.data){
-            if(this.left == null){
-                this.left = new TreeNode(value);
-                return;
+        }
+        if(data>this.data){
+            if(this.right == null){
+                this.right = new TreeNode(data);
             }else{
-                this.left.add(value);
+                this.right.add(data);
             }
         }else{
-            if(this.right == null){
-                this.right = new TreeNode(value);
-                return;
+            if(this.left == null){
+                this.left = new TreeNode(data);
             }else{
-                this.right.add(value);
+                this.left.add(data);
             }
         }
     }
 
-    public void depthFirstInOrderTraversal(List<Integer> elements){
+    /**
+     * Depth First Traversals:
+     * (a) Inorder (Left, Root, Right) :
+     * (b) Preorder (Root, Left, Right) :
+     * (c) Postorder (Left, Right, Root) :
+     *
+     * Breadth First or Level Order Traversal :
+     */
+    public void depthFirstInOrderRecursive(){
         if(this.left != null){
-            this.left.depthFirstInOrderTraversal(elements);
+            this.left.depthFirstInOrderRecursive();
         }
-        elements.add(this.data);
+        System.out.print(this.data+" ");
         if(this.right != null){
-            this.right.depthFirstInOrderTraversal(elements);
+            this.right.depthFirstInOrderRecursive();
         }
+    }
+//  root --> left --> right
+    public void depthFirstPreOrderRecursive(){
+        System.out.print(this.data+" ");
+        if(this.left != null){
+            this.left.depthFirstPreOrderRecursive();
+        }
+        if(this.right != null){
+            this.right.depthFirstPreOrderRecursive();
+        }
+    }
+
+    //  left --> right --> root
+    public void depthFirstPostOrderRecursive(){
+        if(this.left != null){
+            this.left.depthFirstPostOrderRecursive();
+        }
+        if(this.right != null){
+            this.right.depthFirstPostOrderRecursive();
+        }
+        System.out.print(this.data+" ");
     }
 }
