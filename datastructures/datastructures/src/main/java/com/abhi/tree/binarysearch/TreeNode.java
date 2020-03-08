@@ -91,4 +91,9 @@ public class TreeNode {
         }
         System.out.print(this.data+" ");
     }
+
+    @Override
+    public String toString(){
+        return this.getData()+" ";
+    }
 }

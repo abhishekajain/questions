@@ -89,7 +89,7 @@ public class Tree {
             while(currentElement.getLeft() != null){
                 currentElement = currentElement.getLeft();
             }
-            System.out.println(currentElement.getData());
+            System.out.println("Min-->"+currentElement.getData());
             return currentElement;
         }
     }
@@ -105,6 +105,69 @@ public class Tree {
             return currentElement;
         }
     }
+
+    public TreeNode find(int value){
+        TreeNode currentElement = root;
+        while(currentElement != null){
+            if(value == currentElement.getData()){
+                return currentElement;
+            }
+            else if(value > currentElement.getData()){
+                currentElement = currentElement.getRight();
+            }else{
+                currentElement = currentElement.getLeft();
+            }
+        }
+        return currentElement;
+    }
+    
+    public TreeNode delete(int value) {
+    	if(root != null) {
+    		TreeNode currentElement = this.root;
+    		TreeNode parentElement = null;
+    		while(currentElement != null){
+                if(value == currentElement.getData()){
+                    if(currentElement.getLeft() == null) {
+                    	if(parentElement == null) {
+                    		this.root = currentElement.getRight();
+                    	}
+                    	else if(parentElement.getLeft() == currentElement) {
+                    		parentElement.setLeft(currentElement.getRight());
+                    	}else {
+                    		parentElement.setRight(currentElement.getRight());
+                    	}
+                    }else if(currentElement.getRight() == null) {
+                    	if(parentElement == null) {
+                    		this.root = currentElement.getLeft();
+                    	} else if(parentElement.getLeft() == currentElement) {
+                    		parentElement.setLeft(currentElement.getLeft());
+                    	}else {
+                    		parentElement.setRight(currentElement.getLeft());
+                    	}
+                    }else {
+                    	//find min element of right tree
+                    	Tree rightSubTree = new Tree();
+                    	rightSubTree.root = currentElement.getRight();
+                    	TreeNode replacementNode = rightSubTree.getMin();
+                    	//move value to current
+                    	currentElement.setData(replacementNode.getData());	
+                    	// delete replacement node
+                    	rightSubTree.delete(replacementNode.getData());
+                    }
+                    return root;
+                }
+                else if(value > currentElement.getData()){
+                	parentElement = currentElement;
+                    currentElement = currentElement.getRight();
+                }else{
+                	parentElement = currentElement;
+                    currentElement = currentElement.getLeft();
+                }
+    		}
+    	}
+    	return root;
+    }   
+
 
     public static void main(String[] args) {
         Tree tree = new Tree();
@@ -129,6 +192,9 @@ public class Tree {
         tree.getMax();
         System.out.println("\ngetMin:");
         tree.getMin();
+        System.out.println(tree.find(19));
+        System.out.println(tree.find(8));
+        System.out.println(tree.find(24));
 
         Tree second_tree = new Tree();
         second_tree.add(25);
@@ -164,5 +230,35 @@ public class Tree {
         second_tree.getMax();
         System.out.println("\ngetMin:");
         second_tree.getMin();
+        
+        System.out.println(second_tree.find(35));
+        System.out.println(second_tree.find(999));
+        System.out.println(second_tree.find(12));
+        System.out.println("\nprintBreadthFirstIterative:");
+        second_tree.printBreadthFirstIterative();
+        
+        Tree thirdTree = new Tree();
+        thirdTree.add(50);
+        thirdTree.add(30);
+        thirdTree.add(70);
+        thirdTree.add(20);
+        thirdTree.add(40);
+        thirdTree.add(60);
+        thirdTree.add(80);
+        
+        System.out.println("\ndepthFirstInOrderRecursive:");
+        thirdTree.depthFirstInOrderRecursive();
+        
+        thirdTree.delete(20);
+        System.out.println("\ndepthFirstInOrderRecursive:");
+        thirdTree.depthFirstInOrderRecursive();
+        
+        thirdTree.delete(30);
+        System.out.println("\ndepthFirstInOrderRecursive:");
+        thirdTree.depthFirstInOrderRecursive();
+        
+        thirdTree.delete(50);
+        System.out.println("\ndepthFirstInOrderRecursive:");
+        thirdTree.depthFirstInOrderRecursive();
     }
 }
