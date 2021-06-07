@@ -1,9 +1,10 @@
 package com.abhi.datastructure.arrary;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 
 public class ArrayUtilNew {
 	

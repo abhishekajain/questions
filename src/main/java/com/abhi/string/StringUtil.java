@@ -1,9 +1,9 @@
 package com.abhi.string;
 
-import java.util.Arrays;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class StringUtil {
 
@@ -44,7 +44,7 @@ public class StringUtil {
 		permute(str, 0, str.length() -	 1);
 	}
 	
-	//Write code to reverse a C-Style String. (C-String means that “abcd” is represented as five characters, including the null character.)
+	//Write code to reverse a C-Style String. (C-String means that abcd is represented as five characters, including the null character.)
 	//abcd! length 5 char 0 to 4 0123 5/2 = 2 
 	public static String reverse(String str){
 		int startIndex = 0;
@@ -140,7 +140,7 @@ public class StringUtil {
 		Assert.assertFalse(isPalindrome("geeks"));
 	}
 	
-	//(i.e., “waterbottle” is a rotation of “erbottlewat”). erbottlewaterbottlewat
+	//(i.e., waterbottle is a rotation of erbottlewat). erbottlewaterbottlewat
 	public static boolean isRotation(String s1, String rotation) {
 		
 		if(s1 == null && rotation == null){
