@@ -586,4 +586,200 @@ public class ArrayUtil {
 		System.out.println("<--testpushZerosToEnd");
 	}
 	
+//	i-3<i-2<i-1<i>i+1>i+2>i+3
+    public static int peakIndexInMountainArray(int[] A) {
+    	int length = A.length;
+    	if(length<3) {
+    		return -1;
+    	}
+        int L = 0;
+        int R = length -1;
+    	while(L<=R) {
+            int m = (L+R)/2;
+	        if(A[m-1]<A[m] && A[m]>A[m+1]) {
+	        	return m;
+	        }else if(A[m] > A[m+1]) {
+	        	R = m;
+	        }else if(A[m]>A[m-1]){
+	        	L = m;        	
+	        }else {
+	        	return -1;
+	        }
+    	}
+        return -1;
+    }
+    
+    static class MountainArray{
+    	int[] A;
+    	
+    	public MountainArray(int[] A) {
+    		this.A = A;
+    	}
+    	
+    	public int length() {
+    		return A.length;
+    	}
+    	
+    	public int get(int index) {
+    		return A[index];
+    	}
+    }
+    
+    public int findInMountainArray(int target, MountainArray mountainArr) {
+        int length = mountainArr.length();
+        if(length <3) {
+            return -1;
+        }
+           
+        int L = 0;
+        int R = length -1;
+        int peakIndex = -1;
+        while(L<=R){
+            int m = (L+R)/2;
+            int middleVal = mountainArr.get(m);
+            int leftVal = mountainArr.get(m-1);
+            int rightVal = mountainArr.get(m+1);
+            if(leftVal<middleVal && rightVal<mountainArr.get(m)){
+                peakIndex = m;
+                break;
+            }else if(middleVal > rightVal){
+                R = m;
+            }else if(middleVal > leftVal){
+                L = m;
+            }else{
+                return -1;
+            }
+        }
+        if(peakIndex == -1){
+            return -1;
+        }
+        System.out.println(peakIndex);
+        L=0;
+        R=peakIndex;
+        while(L<=R){
+            int m = (L+R)/2;
+            int middleVal = mountainArr.get(m);
+            if(middleVal > target){
+                R = m-1;
+            }else if(middleVal<target){
+                L = m+1;
+            }else{
+                return m;
+            }
+        }
+        
+        L=peakIndex;
+        R=length -1;
+        while(L<=R){
+            int m = (L+R)/2;
+            int middleVal = mountainArr.get(m);
+            if(middleVal > target){
+                L = m+1;
+            }else if(middleVal<target){
+                R = m-1;
+            }else{
+                return m;
+            }
+        }        
+        
+        return -1;
+    }
+    
+    public int findInMountainArray1(int target, MountainArray mountainArr) {
+        int n = mountainArr.length();
+        int maximal = findMaximal(mountainArr);
+        int idx = binarySearch(mountainArr, 0, maximal, true, target);
+        if (idx >= 0) return idx;
+        return binarySearch(mountainArr, maximal, n - 1, false, target);
+    }
+    
+    private int findMaximal(MountainArray mountainArr) {
+        int n = mountainArr.length();
+        int left = 1;
+        int right = n - 2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            boolean leftAsc = mountainArr.get(mid-1) < mountainArr.get(mid);
+            boolean rightDesc = mountainArr.get(mid) > mountainArr.get(mid+1);
+            if (leftAsc && rightDesc) return mid;
+            if (leftAsc) left = mid + 1;
+            else right = mid - 1;
+        }
+        
+        return -1;
+    }
+    
+    private int binarySearch(MountainArray mountainArr, int left, int right, boolean asc, int target) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int val = mountainArr.get(mid);
+            if (val == target) return mid;
+            
+            boolean lt = val < target;
+            if (asc == lt) left = mid + 1;
+            else right = mid - 1;
+        }
+        
+        return -1;
+    }    
+    
+    @Test
+    public void testFindInMountainArray() {
+    	System.out.println("testFindInMountainArray-->");
+    	int[] A = {0,1,2,4,2,1};
+    	MountainArray arr = new MountainArray(A);
+    	System.out.println(findInMountainArray(3, arr));
+    }
+    
+    @Test
+	public void testPeakIndexInMountainArray() {
+    	int[] A = {18,29,38,59,98,100,99,98,90};
+    	System.out.println(A[peakIndexInMountainArray(A)]);
+    }
+//    asc true i-2<i-1<i<i+1<i+2 
+//    asc false i-2>i-1>i>i+1>i+2
+    public static int binarySearch(int[] A, boolean asc, int target, int L, int R) {
+    	while(L<=R) {
+    		int m = (L+R)/2;
+    		if(A[m] == target) {
+    			return m;
+    		}else if(A[m]>target) {
+    			if(asc) {
+    				R=m-1;
+    			}else {
+    				L=m+1;
+    			}
+    		}else {
+    			if(asc) {
+    				L=m+1;
+    			}else {
+    				R=m-1;
+    			}
+    		}
+    	}
+    	return -1;
+    }
+    
+    @Test
+    public void testBinarySearch() {
+    	System.out.println("tesBinarySearch");
+    	int[] A = {18,29,38,59,98,100,99,98,90};
+    	System.out.println(binarySearch(A, true, 11, 0, 5));
+    	System.out.println(binarySearch(A, false, 59, 5, 8));
+
+    }
+    
+    
+    @Test
+    public void testFactorial() {
+    	System.out.println("testFactorial");
+    	long n = 7;
+    	long result = 1;
+    	while(n>1) {
+    		result = result*n;
+    		n--;
+    	}
+    	
+    	System.out.println(result);
+    }
 }

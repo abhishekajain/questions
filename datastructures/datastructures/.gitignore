@@ -20,5 +20,7 @@
 #IntelliJ
 **/.idea/
 *.iml
+*.sublime-workspace
+*.sublime-project
 
 
