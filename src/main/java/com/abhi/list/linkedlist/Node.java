@@ -3,6 +3,7 @@ package com.abhi.list.linkedlist;
 public class Node {
 	
 	private Node next;
+	private Node previous;
 	private int value;
 	
 	
@@ -18,6 +19,13 @@ public class Node {
 	}
 	public int getValue() {
 		return value;
+	}
+
+	public Node getPrevious() {
+		return previous;
+	}
+	public void setPrevious(Node previous) {
+		this.previous = previous;
 	}
 
 	@Override
