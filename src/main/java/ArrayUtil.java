@@ -398,4 +398,29 @@ public class ArrayUtil {
             return result;
         }
     }
+
+    public static int[][] findPairsWithGivenDifference(int[] arr, int k) {
+        if(k==0){
+            return new int[0][0];
+        }
+        // your code goes here
+        Map<Integer, Integer> map = new LinkedHashMap<>();
+
+        int i = 0;
+        while(i<arr.length){
+            map.put(arr[i], arr[i]-k);
+            i++;
+        }
+
+        List<int[]> result = new ArrayList<int[]>();
+        for(Integer key: map.keySet()){
+            if(map.containsKey(map.get(key))){
+                int[] arrRes = {key, map.get(key)};
+                result.add(arrRes);
+            }
+        }
+
+        return result.toArray(new int[0][0]);
+
+    }
 }

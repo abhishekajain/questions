@@ -24,4 +24,9 @@ public class LinkedListTest {
         assert true;
     }
 
+    @Test
+    public void testGetNode(){
+
+    }
+
 }

@@ -165,4 +165,10 @@ public class ArrayUtilTest {
         List<List<Integer>> result =  ArrayUtil.mergeInterval(input, newInterval);
         Assert.assertEquals(3, result.size());
     }
+
+    @Test
+    public void tesfindPairsWithGivenDifference(){
+        int[] input = {0, -1, -2, 2, 1};
+        int[][] result = ArrayUtil.findPairsWithGivenDifference(input, 1);
+    }
 }
