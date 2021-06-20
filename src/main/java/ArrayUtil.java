@@ -423,4 +423,166 @@ public class ArrayUtil {
         return result.toArray(new int[0][0]);
 
     }
+
+    public static int minRefuelStops1(int target, int startFuel, int[][] stations) {
+        int current = startFuel;
+        int remaining = target;
+
+        int result = -1;
+        int index = 0;
+
+        while(remaining>current){
+
+            result++;
+        }
+
+        return result+1;
+    }
+
+
+    public static int minRefuelStops(int target, int startFuel, int[][] stations) {
+        int current = startFuel;
+        int result = -1;
+        int index = 0;
+        while(target>current){
+            int maxIndex = -1;
+            int max = -1;
+            while(index<stations.length){
+                int[] station = stations[index];
+                if(current>=station[0]){
+                    if(station[1]>max){
+                        max = station[1];
+                        maxIndex = index;
+                    }
+                    index++;
+                }else{
+                    break;
+                }
+            }
+            if(max == -1){
+                return -1;
+            }
+            current += stations[maxIndex][1];
+            index = maxIndex+1;
+            max = -1;
+            result++;
+        }
+
+        return result+1;
+    }
+
+    public static List<List<String>> findDuplicate(String[] paths) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String path : paths) {
+            splitPath(path, map);
+        }
+        List<List<String>> result = new ArrayList<>();
+        for (List<String> list : map.values()){
+            if(list.size()>1){
+                result.add(list);
+            }
+        }
+        return result;
+    }
+
+    private static void splitPath(String path, Map<String, List<String>> map){
+        String[] files = path.split(" ");
+        String dir = files[0];
+        int index = 1;
+        while(index<files.length){
+            String file = files[index].substring(0, files[index].indexOf('('));
+            String content = files[index].substring(files[index].indexOf('(')+1, files[index].indexOf(')'));
+            if(!map.containsKey(content)){
+                map.put(content, new ArrayList<>());
+            }
+            map.get(content).add(dir+"/"+file);
+            index++;
+        }
+    }
+
+    public static int binarySearch(int[] nums, int target) {
+        return binarySearch(nums, target, 0, nums.length-1);
+    }
+
+    public static int binarySearch(int[] nums, int target, int start, int end){
+        if(start == end){
+            if(nums[start] == target){
+                return start;
+            }else{
+                return -1;
+            }
+        }
+        if(end-start == 1){
+            if(nums[start] == target){
+                return start;
+            }else if(nums[end] == target){
+                return end;
+            }else{
+                return -1;
+            }
+        }
+        if(target == nums[start]){
+            return start;
+        }
+        if(target == nums[end]){
+            return end;
+        }
+        int middle = start+(end-start)/2;
+        if(target == nums[middle]){
+            return middle;
+        }
+        int index = -1;
+        if(target>nums[middle]){
+            index = binarySearch(nums, target, middle+1, end);
+        }else{
+            index = binarySearch(nums, target, start, middle-1);
+        }
+        return index;
+    }
+
+    public static int search(int[] nums, int target) {
+        return search(nums, target, 0, nums.length-1);
+    }
+
+    public static int search(int[] nums, int target, int start, int end){
+        if(start == end){
+            if(nums[start] == target){
+                return start;
+            }else{
+                return -1;
+            }
+        }
+        if(end-start == 1){
+            if(nums[start] == target){
+                return start;
+            }else if(nums[end] == target){
+                return end;
+            }else{
+                return -1;
+            }
+        }
+        if(target == nums[start]){
+            return start;
+        }
+        if(target == nums[end]){
+            return end;
+        }
+        int middle = start+(end-start)/2;
+        if(target == nums[middle]){
+            return middle;
+        }
+        int index = -1;
+        if(nums[middle]<nums[start] && nums[middle]<nums[end]){//lower value is toward start
+            if(target<nums[middle])
+                index = search(nums, target, start, middle);
+            else
+                index = search(nums, target, middle+1, end);
+        }else {
+            if(target<nums[middle])
+                index = search(nums, target, start, middle);
+            else
+                index = search(nums, target, middle+1, end);
+        }
+        return index;
+    }
 }

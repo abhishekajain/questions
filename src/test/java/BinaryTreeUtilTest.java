@@ -206,4 +206,16 @@ public class BinaryTreeUtilTest {
 
     }
 
+    @Test
+    public void testflattenTree(){
+        BinaryTreeUtil.BinaryTreeNode root = new BinaryTreeUtil.BinaryTreeNode(1);
+        BinaryTreeUtil.BinaryTreeNode left = root.insertLeft(2);
+        root.insertRight(3);
+        left.insertLeft(4);
+        left.insertRight(5);
+        BinaryTreeUtil.flattenTree(root);
+        assertTrue(true);
+
+    }
+
 }

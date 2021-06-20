@@ -380,4 +380,31 @@ public class BinaryTreeUtil {
         return null;
     }
 
+    static void flattenTree(BinaryTreeNode root){
+        if(root == null || (root.left == null && root.right == null)){
+            return;
+        }
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        preordertraversal(root, queue);
+        BinaryTreeNode current = queue.poll();
+        current.left = null;
+        current.right = null;
+        while (!queue.isEmpty()){
+            current.right = queue.poll();
+            current = current.right;
+            current.left = null;
+            current.right = null;
+        }
+    }
+
+    static void preordertraversal(BinaryTreeNode node, Queue<BinaryTreeNode> queue){
+        queue.add(node);
+        if(node.left != null){
+            preordertraversal(node.left, queue);
+        }
+        if(node.right != null){
+            preordertraversal(node.right, queue);
+        }
+    }
+
 }

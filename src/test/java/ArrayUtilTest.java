@@ -171,4 +171,37 @@ public class ArrayUtilTest {
         int[] input = {0, -1, -2, 2, 1};
         int[][] result = ArrayUtil.findPairsWithGivenDifference(input, 1);
     }
+
+    @Test
+    public void testminRefuelStops(){
+        int[][] stations =  {{10,60},{20,30},{30,30},{60,40}};
+        int result = ArrayUtil.minRefuelStops(100, 10, stations);
+        int[][] stations2 =  {{10,100}};
+        int result2 = ArrayUtil.minRefuelStops(100, 1, stations2);
+
+        int[][] stations3 =  {{25,25}, {50,25}, {75,25}};
+        int result3 = ArrayUtil.minRefuelStops(100, 25, stations3);
+
+        int[][] stations4 =  {{13,21},{26,115},{100,47},{225,99},{299,141},{444,198},{608,190},{636,157},{647,255},{841,123}};
+        int result4 = ArrayUtil.minRefuelStops(1000, 299, stations4);
+    }
+
+    @Test
+    public void testsearchpivot(){
+        int[] nums = {4,5,6,7,0,1,2};
+        Assert.assertEquals(4, ArrayUtil.search(nums, 0));
+
+        int[] nums1 = {5,1,2,3,4};
+        Assert.assertEquals(1, ArrayUtil.search(nums1, 1));
+
+        Assert.assertEquals(1, ArrayUtil.search(nums, 5));
+    }
+
+    @Test
+    public void testbinarysearch(){
+        int[] nums = {4,5,6,7,8,9,10};
+        Assert.assertEquals(-1, ArrayUtil.binarySearch(nums, 0));
+        Assert.assertEquals(3, ArrayUtil.binarySearch(nums, 7));
+        Assert.assertEquals(5, ArrayUtil.binarySearch(nums, 9));
+    }
 }
